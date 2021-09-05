@@ -1,0 +1,26 @@
+{
+  "name": "extractDirectors1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "director.js",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "puppeteer": "^10.2.0",
+    "uuidv4": "^6.2.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webersinfotech/extractDirectors.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webersinfotech/extractDirectors/issues"
+  },
+  "homepage": "https://github.com/webersinfotech/extractDirectors#readme"
+}
