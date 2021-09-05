@@ -70,7 +70,7 @@ const blockedUrls = [
     if (cluster.isMaster) {
         console.log(`Primary ${process.pid} is running`);
 
-        const connections = new Array(3).fill(0)
+        const connections = new Array(15).fill(0)
 
         for (let connection of connections) {
             cluster.fork()
