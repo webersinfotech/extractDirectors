@@ -122,7 +122,8 @@ const blockedUrls = [
 
         const browser = await puppeteer.launch({
             defaultViewport: null,
-            headless: true
+            headless: true,
+            args: ['--no-sandbox']
         });
 
         const page = await browser.newPage();
