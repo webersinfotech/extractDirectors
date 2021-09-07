@@ -60,9 +60,7 @@ const fs = require('fs-extra');
             fs.writeFileSync('./totalProcesses.txt', '0', 'utf8')
         }
 
-        const connections = new Array(10).fill(0)
-
-        const processses = []
+        const connections = new Array(17).fill(0)
 
         for (let [index, connection] of connections.entries()) {
             await launchCluster()
