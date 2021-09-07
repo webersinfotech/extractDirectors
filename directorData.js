@@ -42,6 +42,10 @@ const fs = require('fs-extra');
 //             console.error(e)
 //         }
 //     }
+
+//     connection.destroy()
+
+//     process.exit()
 // })()
 
 (async () => {
@@ -56,7 +60,7 @@ const fs = require('fs-extra');
             fs.writeFileSync('./totalProcesses.txt', '0', 'utf8')
         }
 
-        const connections = new Array(65).fill(0)
+        const connections = new Array(10).fill(0)
 
         const processses = []
 
