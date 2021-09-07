@@ -4,6 +4,8 @@
   "description": "",
   "main": "director.js",
   "dependencies": {
+    "axios": "^0.21.4",
+    "fs-extra": "^10.0.0",
     "mysql": "^2.18.1",
     "puppeteer": "^10.2.0",
     "uuidv4": "^6.2.12"

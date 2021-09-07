@@ -98,7 +98,7 @@ const blockedUrls = [
 
             await connection.beginTransaction()
 
-            directorPages = await query(`SELECT * FROM directorPages WHERE status = 'NOT STARTED' ORDER BY id ASC LIMIT 1530`)
+            directorPages = await query(`SELECT * FROM directorPages WHERE status = 'NOT STARTED' ORDER BY id ASC LIMIT 2`)
 
             console.log('directorPages Fetched')
 
@@ -143,7 +143,7 @@ const blockedUrls = [
         for (let directorPage of directorPages) {
             const t0 = performance.now()
 
-            console.log(`${directorPage.alphabet} ::: ${directorPage.url} ::: Process Started`)
+            // console.log(`${directorPage.alphabet} ::: ${directorPage.url} ::: Process Started`)
 
             try {
                 await page.goto(directorPage.url);
@@ -191,5 +191,7 @@ const blockedUrls = [
                 console.log(`${directorPage.alphabet} ::: ${directorPage.url} ::: FAILED Time took ${((t1 - t0) / 1000)} seconds.`)
             }
         }
+
+        process.exit()
     }
 })()
