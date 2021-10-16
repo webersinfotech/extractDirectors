@@ -1,10 +1,10 @@
 {
   "name": "extractDirectors1",
   "version": "1.0.0",
-  "description": "",
   "main": "director.js",
   "dependencies": {
     "axios": "^0.21.4",
+    "cheerio": "^1.0.0-rc.10",
     "fs-extra": "^10.0.0",
     "mysql": "^2.18.1",
     "puppeteer": "^10.2.0",
@@ -24,5 +24,6 @@
   "bugs": {
     "url": "https://github.com/webersinfotech/extractDirectors/issues"
   },
-  "homepage": "https://github.com/webersinfotech/extractDirectors#readme"
+  "homepage": "https://github.com/webersinfotech/extractDirectors#readme",
+  "description": ""
 }

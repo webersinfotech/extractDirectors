@@ -2,51 +2,8 @@ const mysql      = require('mysql');
 const util = require('util');
 const axios = require('axios');
 const { performance } = require('perf_hooks');
-const { cpus } = require('os');
 const cluster = require('cluster');
-const child_process = require('child_process');
 const { uuid } = require('uuidv4');
-const fs = require('fs-extra');
-
-// (async () => {
-//     const connection = mysql.createConnection({
-//         host:'google-account.cmlfk75xsv3h.ap-south-1.rds.amazonaws.com', 
-//         user: 'shahrushabh1996', 
-//         database: 'rapidTax',
-//         password: '11999966',
-//         ssl: 'Amazon RDS'
-//     }) 
-    
-//     const query = util.promisify(connection.query).bind(connection)
-
-//     const connections = new Array(65).fill(0)
-
-//     for (let [index, connection] of connections.entries()) {
-//         try {
-//             const directors = await query(`SELECT * FROM directors WHERE extractionStatus = 'PROCESSING' OR extractionStatus = 'FAILED' ORDER BY id ASC LIMIT 2000`)
-    
-//             console.log('Directors Fetched')
-    
-//             const directorIds = []
-    
-//             directors.map((director) => directorIds.push(director.id))
-    
-//             console.log('Director ID array ready')
-    
-//             if (directorIds.length) {
-//                 await query(`UPDATE directors SET extractionStatus = ? WHERE id IN (?)`, ['NOT STARTED', directorIds])
-//             }
-    
-//             console.log('Updating extractionStatus')
-//         } catch (e) {
-//             console.error(e)
-//         }
-//     }
-
-//     connection.destroy()
-
-//     process.exit()
-// })()
 
 (async () => {
     function timeout(ms) {
@@ -56,11 +13,7 @@ const fs = require('fs-extra');
     if (cluster.isMaster) {
         console.log(`Primary ${process.pid} is running`);
 
-        if (!fs.pathExistsSync('./totalProcesses.txt')) {
-            fs.writeFileSync('./totalProcesses.txt', '0', 'utf8')
-        }
-
-        const connections = new Array(16).fill(0)
+        const connections = new Array(65).fill(0)
 
         for (let [index, connection] of connections.entries()) {
             await launchCluster()
@@ -95,7 +48,7 @@ const fs = require('fs-extra');
         
                 await connection.beginTransaction()
         
-                directors = await query(`SELECT * FROM directors WHERE extractionStatus = 'NOT STARTED' ORDER BY id ASC LIMIT 2000`)
+                directors = await query(`SELECT * FROM directors WHERE extractionStatus = 'NOT STARTED' ORDER BY id ASC LIMIT 300`)
         
                 console.log('Directors Fetched')
         
@@ -120,13 +73,11 @@ const fs = require('fs-extra');
             for (let director of directors) {
                 const t0 = performance.now()
         
-                console.log(`${director.DIN} ::: Process Started`)
-        
                 try {
                     const companies = await getResponse(director.DIN)
 
-                    if (companies.length) await query('INSERT INTO directorData (id, CIN, dateJoin, dateResign, designation, companyName, companyStatus, paidupCapital) VALUES ?',
-                    [companies.map(company => [uuid(), company.CIN, company.DATE_JOIN, company.DATE_RESIGN, company.DESIGNATION, company.COMPANY_NAME, company.COMPANY_STATUS, company.PAIDUP_CAPITAL])])
+                    if (companies.length) await query('INSERT INTO directorData (id, DIN, CIN, dateJoin, dateResign, designation, companyName, companyStatus, paidupCapital) VALUES ?',
+                    [companies.map(company => [uuid(), director.DIN, company.CIN, company.DATE_JOIN, company.DATE_RESIGN, company.DESIGNATION, company.COMPANY_NAME, company.COMPANY_STATUS, company.PAIDUP_CAPITAL])])
         
                     await query(`UPDATE directors SET extractionStatus = ? WHERE id IN (?)`, ['SUCCESS', director.id])
         
