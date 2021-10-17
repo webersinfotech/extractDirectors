@@ -48,7 +48,7 @@ const { uuid } = require('uuidv4');
         
                 await connection.beginTransaction()
         
-                directors = await query(`SELECT * FROM directors WHERE extractionStatus = 'NOT STARTED' ORDER BY id ASC LIMIT 300`)
+                directors = await query(`SELECT * FROM directors WHERE extractionStatus = 'NOT STARTED' ORDER BY id ASC LIMIT 2000`)
         
                 console.log('Directors Fetched')
         
