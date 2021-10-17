@@ -13,7 +13,7 @@ const { uuid } = require('uuidv4');
     if (cluster.isMaster) {
         console.log(`Primary ${process.pid} is running`);
 
-        const connections = new Array(65).fill(0)
+        const connections = new Array(30).fill(0)
 
         for (let [index, connection] of connections.entries()) {
             await launchCluster()
